@@ -25,3 +25,7 @@ PtrToEmployee searchEmployeeByName(PtrToConstEmployee ptr, int tableSize, char *
 
     return NULL;
 }
+
+// Create function searchEmployeeByPhone
+
+// Create function searchEmployeeBySalary
