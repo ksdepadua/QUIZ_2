@@ -8,6 +8,7 @@ int main(void) {
     //Defined in loShuMagicSquare.c
     int checkLoShuMagicSquare(const int arr[3][3]);
     void createLoShuMagicSquare();
+    void arrToStr(char *str, int *intArr);  // DELETE
 
     int test1[3][3] = {{4, 9, 2}, 
                       {3, 5, 7}, 
@@ -26,10 +27,11 @@ int main(void) {
         printf("Array of {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}} is a Lo Shu Magic Square!\n");
     else
         printf("Array of {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}} is not a Lo Shu Magic Square.\n");
+
     if(checkLoShuMagicSquare(test3))
-        printf("Array test3 is a Lo Shu Magic Square!\n");
+        printf("Array of {{2, 7, 6}, {9, 5, 1}, {4, 3, 8}} is a Lo Shu Magic Square!\n");
     else
-        printf("Array test3 is not a Lo Shu Magic Square.\n");
+        printf("Array of {{2, 7, 6}, {9, 5, 1}, {4, 3, 8}} is not a Lo Shu Magic Square.\n");
 
     createLoShuMagicSquare();
 }
