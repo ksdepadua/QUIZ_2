@@ -30,7 +30,7 @@ enum returnVal{false, true};
 
 // Calculates sums of rows
 // Returns targetSum if all rows match, returns false (0) if rows don't match
-static const int checkRowSums(const int *arr) {
+static int checkRowSums(const int *arr) {
     int currSum = 0, target = -1;
     int *arrPtr = arr;
 
@@ -51,7 +51,7 @@ static const int checkRowSums(const int *arr) {
 
 // Calculates sums of rows
 // Returns targetSum if all cols match, returns false (0) if cols don't match
-static const int checkColSums(const int *arr, const int target) {
+static int checkColSums(const int *arr, const int target) {
     int currSum = 0;
     int *arrPtr = arr;
 
@@ -70,7 +70,7 @@ static const int checkColSums(const int *arr, const int target) {
     return target;
 }
 
-const int checkLoShuMagicSquare(int *arr) {
+int checkLoShuMagicSquare(int *arr) {
     int target;
     int temp = 0;
     int * const start = arr;    // Const pointer for arr to return to
