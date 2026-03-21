@@ -22,14 +22,56 @@ b. Print the square and show the placement of values in the following format:
 
 #define INT_SIZE 4
 #define ARR_SIZE 9
-#define ROW_SIZE 3
-#define COL_SIZE 3
+#define NUM_ROWS 3
+#define NUM_COLS 3
 #define DIAG_SIZE 3
 
 enum returnVal{false, true};
 
+// Calculates sums of rows
+// Returns targetSum if all rows match, returns false (0) if rows don't match
+static const int checkRowSums(const int *arr) {
+    int currSum = 0, target = -1;
+    int *arrPtr = arr;
+
+    for(int i = 0; i < ARR_SIZE; i++)
+    {
+        currSum += *arrPtr;
+        arrPtr++;
+
+        if(i % NUM_COLS == 2) {
+            if(target == -1) { target = currSum; }
+            else if(currSum != target) { return false; }
+            currSum = 0;
+        }
+    }
+
+    return target;
+}
+
+// Calculates sums of rows
+// Returns targetSum if all cols match, returns false (0) if cols don't match
+static const int checkColSums(const int *arr, const int target) {
+    int currSum = 0;
+    int *arrPtr = arr;
+
+    for(int i = 0; i < ARR_SIZE; i++)
+    {
+        currSum += *arrPtr;
+        arrPtr += NUM_ROWS;
+
+        if(i % NUM_ROWS == 2) {
+            if(currSum != target) { return false; }
+            currSum = 0;
+            if(i != 8) { arrPtr -= 8; } //Points to next column
+        }
+    }
+
+    return target;
+}
+
 const int checkLoShuMagicSquare(int *arr) {
-    int sum = -1;
+    int target;
     int temp = 0;
     int * const start = arr;    // Const pointer for arr to return to
     int i;
@@ -40,37 +82,12 @@ const int checkLoShuMagicSquare(int *arr) {
     arr = start;
 
     // Check row sums
-    for(i = 0; i < ARR_SIZE; i++)
-    {
-        temp += *arr;
-        arr++;
-
-        if(i % ROW_SIZE == 2)  // Last element of the row was added
-        {
-            if(sum == -1) { sum = temp; }
-            if(temp != sum) { return false; }
-            temp = 0;
-        }
-    }
-
-    arr = start; // Reset pointer
+    target = checkRowSums(arr);
+    if(target == false) { return false; }
 
     // Check column sums
-    for(i = 0; i < ARR_SIZE; i++)
-    {
-        temp += *arr;
-        arr += ROW_SIZE;
-
-        if(i % COL_SIZE == 2)
-        {
-            if(temp != sum) { return false; }
-            temp = 0;
-            if(i != 8)
-                arr -= 8;   // Points to next column
-        }
-    }
-
-    arr = start; // Reset pointer
+    target = checkColSums(arr, target);
+    if(target == false) { return false; }
 
     // Check diagonal sums
     // (Top left to bottom right)
@@ -79,7 +96,7 @@ const int checkLoShuMagicSquare(int *arr) {
         temp += *arr;
         arr += 4;
     }
-    if(temp != sum) { return false; }
+    if(temp != target) { return false; }
 
     temp = 0;
     arr = start; // Reset pointer
@@ -91,7 +108,7 @@ const int checkLoShuMagicSquare(int *arr) {
         temp += *arr;
         arr += 2;
     }
-    if(temp != sum) { return false; }
+    if(temp != target) { return false; }
 }
 
 // Helper functions swap(), randomize() and map1dTo2d() for createLoShuMagicSquare()
